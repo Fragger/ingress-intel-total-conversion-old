@@ -317,11 +317,6 @@ window.renderPortal = function(ent) {
     levelMarker: pLevel,
     guid: ent[0]});
 
-  /*var pGroup = L.layerGroup([pLevel, p]);
-  pGroup.options = p.options;
-  pGroup.bringToFront = p.bringToFront;
-  pGroup.setStyle = p.setStyle;*/
-
   p.on('remove', function() {
     var portalGuid = this.options.guid
     portalsLayers[parseInt(this.options.level)].removeLayer(this.options.levelMarker);
@@ -344,7 +339,6 @@ window.renderPortal = function(ent) {
     // enable for debugging
     if(window.portals[this.options.guid]) throw('duplicate portal detected');
     window.portals[this.options.guid] = this;
-    
     this.options.levelMarker.addTo(portalsLayers[parseInt(this.options.level)]);
     
     // handles the case where a selected portal gets removed from the
