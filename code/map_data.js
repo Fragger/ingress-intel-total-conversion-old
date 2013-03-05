@@ -180,19 +180,17 @@ window.cleanUp = function() {
   var minlvl = getMinPortalLevel();
   for(var i = 0; i < portalsLayers.length; i++) {
     // i is also the portal level
-    portalsLayers[i].eachLayer(function(layerGroup) {
-      layerGroup.eachLayer(function(item) {
-        var itemGuid = item.options.guid;
-        if(!itemGuid) return true; // Skip portallevel div container as this doesn't have everything we need
-        // check if 'item' is a portal
-        if(getTypeByGuid(itemGuid) != TYPE_PORTAL) return true;
-        // portal must be in bounds and have a high enough level. Also don’t
-        // remove if it is selected.
-        if(itemGuid == window.selectedPortal ||
-          (b.contains(item.getLatLng()) && i >= minlvl)) return true;
-        cnt[0]++;
-        portalsLayers[i].removeLayer(item);
-      });
+    portalsLayers[i].eachLayer(function(item) {
+      var itemGuid = item.options.guid;
+      if(!itemGuid) return true; // Skip portallevel div container as this doesn't have everything we need
+      // check if 'item' is a portal
+      if(getTypeByGuid(itemGuid) != TYPE_PORTAL) return true;
+      // portal must be in bounds and have a high enough level. Also don’t
+      // remove if it is selected.
+      if(itemGuid == window.selectedPortal ||
+        (b.contains(item.getLatLng()) && i >= minlvl)) return true;
+      cnt[0]++;
+      portalsLayers[i].removeLayer(item);
     });
   }
   linksLayer.eachLayer(function(link) {
@@ -296,6 +294,15 @@ window.renderPortal = function(ent) {
     lvRadius = 7;
   }
 
+  var pLevel = L.marker(latlng, {
+    icon: L.divIcon({
+      className: 'portallevel',
+      iconSize: [20,16],
+      html: parseInt(portalLevel)
+      }),
+    clickable: false
+    });
+  
   var p = L.circleMarker(latlng, {
     radius: lvRadius + (L.Browser.mobile ? PORTAL_RADIUS_ENLARGE_MOBILE : 0),
     color: ent[0] === selectedPortal ? COLOR_SELECTED_PORTAL : COLORS[team],
@@ -307,24 +314,17 @@ window.renderPortal = function(ent) {
     level: portalLevel,
     team: team,
     details: ent[2],
+    levelMarker: pLevel,
     guid: ent[0]});
 
-  var pLevel = L.marker(latlng, {
-    icon: L.divIcon({
-      className: 'portallevel',
-      iconSize: [20,16],
-      html: parseInt(portalLevel)
-      }),
-    clickable: false
-    });
-
-  var pGroup = L.layerGroup([pLevel, p]);
+  /*var pGroup = L.layerGroup([pLevel, p]);
   pGroup.options = p.options;
   pGroup.bringToFront = p.bringToFront;
-  pGroup.setStyle = p.setStyle;
+  pGroup.setStyle = p.setStyle;*/
 
   p.on('remove', function() {
     var portalGuid = this.options.guid
+    portalsLayers[parseInt(this.options.level)].removeLayer(this.options.levelMarker);
 
     // remove attached resonators, skip if
     // all resonators have already removed by zooming
@@ -343,11 +343,14 @@ window.renderPortal = function(ent) {
   p.on('add', function() {
     // enable for debugging
     if(window.portals[this.options.guid]) throw('duplicate portal detected');
-    window.portals[this.options.guid] = pGroup;
+    window.portals[this.options.guid] = this;
+    
+    this.options.levelMarker.addTo(portalsLayers[parseInt(this.options.level)]);
+    
     // handles the case where a selected portal gets removed from the
     // map by hiding all portals with said level
     if(window.selectedPortal !== this.options.guid)
-      window.portalResetColor(pGroup);
+      window.portalResetColor(this);
   });
 
   p.on('click',    function() { window.renderPortalDetails(ent[0]); });
@@ -358,8 +361,8 @@ window.renderPortal = function(ent) {
 
   window.renderResonators(ent, null);
 
-  window.runHooks('portalAdded', {portal: pGroup});
-  pGroup.addTo(layerGroup);
+  window.runHooks('portalAdded', {portal: p});
+  p.addTo(layerGroup);
 }
 
 window.renderResonators = function(ent, portalLayer) {

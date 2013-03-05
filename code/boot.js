@@ -125,6 +125,7 @@ window.setupMap = function() {
     for(var i = 1; i < portalsLayers.length; i++) {
       portalsLayers[i].eachLayer(function(item) {
         var itemGuid = item.options.guid;
+        if(!itemGuid) return true; // Skip portallevel div container as this doesn't have a guid
         // check if 'item' is a resonator
         if(getTypeByGuid(itemGuid) != TYPE_RESONATOR) return true;
         portalsLayers[i].removeLayer(item);
