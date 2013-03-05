@@ -302,7 +302,7 @@ window.renderPortal = function(ent) {
       }),
     clickable: false
     });
-  
+
   var p = L.circleMarker(latlng, {
     radius: lvRadius + (L.Browser.mobile ? PORTAL_RADIUS_ENLARGE_MOBILE : 0),
     color: ent[0] === selectedPortal ? COLOR_SELECTED_PORTAL : COLORS[team],
@@ -340,7 +340,7 @@ window.renderPortal = function(ent) {
     if(window.portals[this.options.guid]) throw('duplicate portal detected');
     window.portals[this.options.guid] = this;
     this.options.levelMarker.addTo(portalsLayers[parseInt(this.options.level)]);
-    
+
     // handles the case where a selected portal gets removed from the
     // map by hiding all portals with said level
     if(window.selectedPortal !== this.options.guid)
