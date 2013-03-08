@@ -102,6 +102,15 @@ a:hover {
   text-shadow: 0 0 0.2em black, 0 0 0.2em black, 0 0 0.2em black;
 }
 
+.portallevel {
+  color: white;
+  font-size:13px;
+  font-family: "coda",arial,helvetica,sans-serif; /*override leaflet-container */
+  text-align: center;
+  pointer-events:none;
+  /*text-shadow: 0 0 0.2em black, 0 0 0.2em black, 0 0 0.2em black;*/
+}
+
 
 /* chat ***************************************************************/
 
