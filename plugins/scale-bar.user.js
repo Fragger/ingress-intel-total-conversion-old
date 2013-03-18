@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             iitc-plugin-scale-bar@breunigs
 // @name           iitc: scale bar
-// @version        0.1
+// @version        0.1-@@BUILDDATE@@
 // @namespace      https://github.com/breunigs/ingress-intel-total-conversion
 // @updateURL      https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/scale-bar.user.js
 // @downloadURL    https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/scale-bar.user.js

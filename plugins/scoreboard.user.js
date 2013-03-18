@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             iitc-plugin-scoreboard@vita10gy
 // @name           iitc: show a localized scoreboard.
-// @version        0.1.3
+// @version        0.1.3-@@BUILDDATE@@
 // @namespace      https://github.com/breunigs/ingress-intel-total-conversion
 // @updateURL      https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/scoreboard.user.js
 // @downloadURL    https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/scoreboard.user.js
