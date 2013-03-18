@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             iitc-plugin-draw-tools@breunigs
 // @name           iitc: draw tools
-// @version        0.2.2-@@BUILDDATE@@
+// @version        0.3-@@BUILDDATE@@
 // @namespace      https://github.com/breunigs/ingress-intel-total-conversion
 // @updateURL      https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/draw-tools.user.js
 // @downloadURL    https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/draw-tools.user.js
