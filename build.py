@@ -5,7 +5,7 @@ import time
 import re
 import io
 import base64
-import os
+import os, errno
 
 def readfile(fn):
     with io.open(fn, 'Ur', encoding='utf8') as f:
